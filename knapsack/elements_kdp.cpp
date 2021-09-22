@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int knapsack(int wt[],int val[],int w,int n){
+void knapsack(int wt[],int val[],int w,int n){
     int t[n+1][w+1];
     for(int i=0;i<=n;i++){
         for(int j=0;j<=w;j++){
@@ -20,7 +20,18 @@ int knapsack(int wt[],int val[],int w,int n){
             }
         }
     }
-    return t[n][w];
+    int res =t[n][w];
+    cout<<"The total profit earned is : "<<res<<"\n";
+    int k=w;
+    for(int i=n;i>0 && res>0;i--){
+        if(res==t[i-1][k])
+            continue;
+        else{
+            cout<<wt[i-1]<<" ";
+            res=res-val[i-1];
+            k=k-wt[i-1];
+        }
+    }
 }
 
 
@@ -39,6 +50,6 @@ int main(){
     }
     cout<<"Enter the capacity of knapsack: ";
     cin>>w;
-    cout<<"The total profit earned is : "<<knapsack(wt,val,w,n);
+    knapsack(wt,val,w,n);
     return 0;
 }

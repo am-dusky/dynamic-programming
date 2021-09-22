@@ -2,27 +2,16 @@
 using namespace std;
 
 int knapsack(int wt[],int val[],int w,int n){
-    int t[n+1][w+1];
-    for(int i=0;i<=n;i++){
-        for(int j=0;j<=w;j++){
-            if(i==0 || j==0)
-                t[i][j]=0;
-        }
+    if(n==0 || w==0){
+        return 0;
     }
-    for(int i=1;i<=n;i++){
-        for(int j=1;j<=w;j++){
-            if(wt[i-1]<=j)
-            {
-                t[i][j]=max(val[i-1]+t[i-1][j-wt[i-1]],t[i-1][j]);
-            }
-            else{
-                t[i][j]=t[i-1][j];
-            }
-        }
+    if(wt[n-1]<=w){
+        return max(val[n-1]+knapsack(wt,val,w-wt[n-1],n-1),knapsack(wt,val,w,n-1));
     }
-    return t[n][w];
+    else if(wt[n-1]>w){
+        return knapsack(wt,val,w,n-1);
+    }
 }
-
 
 int main(){
     int n;
